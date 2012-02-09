@@ -1,7 +1,8 @@
 #!/usr/bin/env python
-import os
 from setuptools import Command
-from setuptools import setup, find_packages
+from setuptools import find_packages
+from setuptools import setup
+import os
 
 def command(fn):
     def wrapped():
@@ -33,6 +34,11 @@ def coverage():
     """run test coverage report with nose"""
     os.execlp("nosetests", "nosetests", "--with-coverage", "--cover-package=gservice")
 
+requires = ['gevent>=0.13.3',
+            'setproctitle',
+            'nose',
+            'python-daemon']
+
 setup(
     name='gservice',
     version='0.3.0',
@@ -40,13 +46,15 @@ setup(
     author_email='jeff.lindsay@twilio.com',
     description='Lightweight service framework',
     packages=find_packages(),
-    install_requires=['gevent==0.13.3', 'setproctitle', 'nose', 'python-daemon',],
+    install_requires=requires,
     data_files=[],
-    entry_points={
-        'console_scripts': [
-            'gservice = gservice.runner:main',]},
+    entry_points="""
+    [console_scripts]
+    gservice=gservice.runner:main
+    """,
     cmdclass={
         'test': test(),
         'coverage': coverage(),
-        'build_pages': build_pages(),}
+        'build_pages': build_pages()
+        }
 )
