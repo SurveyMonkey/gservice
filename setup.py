@@ -43,6 +43,7 @@ setup(
     name='gservice',
     version='0.3.0',
     author='Jeff Lindsay',
+    long_description=open('README.md').read(),
     author_email='jeff.lindsay@twilio.com',
     description='Lightweight service framework',
     packages=find_packages(),
